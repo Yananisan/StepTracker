@@ -1,0 +1,60 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StepTracker"
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib" 
+        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:syncfusion="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
+    x:Class="StepTracker.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="1000">
+    <Window.DataContext>
+        <local:ApplicationViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+
+
+
+
+        <DataGrid  x:Name="infocardsGrid" AutoGenerateColumns="False" ItemsSource="{Binding ViewInfoCards}" SelectedItem="{Binding SelectedCard}" SelectionChanged="infocardsGrid_SelectionChanged">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Difference}" Value="More">
+                            <Setter Property="Background" Value="#BDFFCE"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Difference}" Value="Less">
+                            <Setter Property="Background" Value="#FFBFBD"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="User" Binding="{Binding User}"/>
+                <DataGridTextColumn Header="AvgSteps" Binding="{Binding AvgSteps}"/>
+                <DataGridTextColumn Header="Best" Binding="{Binding Best}"/>
+                <DataGridTextColumn Header="Worst" Binding="{Binding Worst}"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <Button x:Name="Button_Export" Content="Export" HorizontalAlignment="Left" Margin="549,3,0,0" VerticalAlignment="Top" Width="75" Panel.ZIndex="10" Grid.Column="1" Click="Button_Export_Click" IsEnabled="False"/>
+
+        <syncfusion:SfChart x:Name="MySFChart" Grid.Column="1" Header="Chart Header" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Center">
+            <syncfusion:SfChart.PrimaryAxis>
+                <syncfusion:CategoryAxis/>
+            </syncfusion:SfChart.PrimaryAxis>
+            <syncfusion:SfChart.SecondaryAxis>
+                <syncfusion:NumericalAxis/>
+            </syncfusion:SfChart.SecondaryAxis>
+        </syncfusion:SfChart>
+
+
+    </Grid>
+</Window>
